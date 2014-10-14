@@ -51,7 +51,7 @@ describe('The base attribute type', function () {
     })
 
     it('should compose `to()` methods parent(child())', function () {
-      var expected = 'foo'
+      var expected = {S: 'foo'}
       sinon.spy(base, 'to')
       def.to = sinon.stub().returns(expected)
       var child = base.extend(def)
@@ -73,17 +73,39 @@ describe('The base attribute type', function () {
 
   describe('`to()` method', function () {
     
-    it('should return value unmodified', function () {
-      var expected = 'foo'
+    it('should throw when called with a non-object', function () {
+      !(function () { base.to(null) }).should.throw()
+      !(function () { base.to('foo') }).should.throw()
+      !(function () { base.to(123) }).should.throw()
+    })
+
+    it('should throw when val does not have one key', function () {
+      !(function () { base.to({}) }).should.throw()
+      !(function () { base.to({S: 'foo', N: 123}) }).should.throw()
+    })
+
+    it('should convert empty values to {NULL: true}', function () {
+      var nullVal = {NULL: true}
+      base.to({S: ''}).should.eql(nullVal)
+      base.to({S: null}).should.eql(nullVal)
+      base.to({SS: []}).should.eql(nullVal)
+    })
+
+    it('should return valid values unmodified', function () {
+      var expected = {S: 'foo'}
       base.to(expected).should.equal(expected)
     })
 
   })
 
   describe('`from()` method', function () {
+
+    it('should convert {NULL: true} values to null', function () {
+      should(base.from({NULL: true})).equal(null)
+    })
     
-    it('should return value unmodified', function () {
-      var expected = 'foo'
+    it('should return non-null values unmodified', function () {
+      var expected = {S: 'foo'}
       base.to(expected).should.equal(expected)
     })
 
