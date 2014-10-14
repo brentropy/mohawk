@@ -41,13 +41,22 @@ describe('The base attribute type', function () {
     })
 
     it('should extend the parent meta with the child meta', function () {
-      var parent = base.meta({a: 1, b: 2})
+      var parent = base.set({a: 1, b: 2})
       def.meta = {b: 3, c: 4}
       child = parent.extend(def)
-      child.meta.should.be.a.Function
       child.meta.should.have.property('a', 1)
       child.meta.should.have.property('b', 3)
       child.meta.should.have.property('c', 4)
+    })
+
+    it('should return a frozen object', function () {
+      var child = base.extend(def)
+      Object.isFrozen(child).should.be.true
+    })
+
+    it('should freeze the meta property', function () {
+      var child = base.extend(def)
+      Object.isFrozen(child.meta).should.be.true
     })
 
     it('should compose `to()` methods parent(child())', function () {
@@ -100,8 +109,14 @@ describe('The base attribute type', function () {
 
   describe('`from()` method', function () {
 
-    it('should convert {NULL: true} values to null', function () {
+    it('should convert {NULL: true} values null if no nullValue', function () {
       should(base.from({NULL: true})).equal(null)
+    })
+
+    it('should conver {NULL: true} values to nullValue if set', function () {
+      var expected = 47
+      var withNullValue = base.set({nullValue: expected})
+      withNullValue.from({NULL: true}).should.equal(expected)
     })
     
     it('should return non-null values unmodified', function () {
@@ -111,23 +126,32 @@ describe('The base attribute type', function () {
 
   })
 
-  describe('`meta()` method', function () {
+  describe('`set()` method', function () {
     
     it('should return a new object', function () {
-      var child = base.meta({})
+      var child = base.set({})
       child.should.not.equal(base)
     })
 
     it('should return a child with the same __typeId', function () {
-      var child = base.meta({})
+      var child = base.set({})
       child.__typeId.should.equal(base.__typeId)
     })
 
     it('should extend the parent meta with the child meta', function () {
-      var meta = base.meta({a: 1, b: 2})
-      meta.meta.should.be.a.Function
-      child.meta.should.have.property('a', 1)
-      child.meta.should.have.property('b', 2)
+      var meta = base.set({a: 1, b: 2})
+      meta.meta.should.have.property('a', 1)
+      meta.meta.should.have.property('b', 2)
+    })
+
+    it('should return a frozen object', function () {
+      var child = base.set({})
+      Object.isFrozen(child).should.be.true
+    })
+
+    it('should freeze the meta property', function () {
+      var child = base.set({})
+      Object.isFrozen(child.meta).should.be.true
     })
 
   })
