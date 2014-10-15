@@ -4,8 +4,8 @@ var proxyquire = require('proxyquire').noPreserveCache()
 var stubs = {}
 var json = proxyquire('../../lib/types/json', {'./string': stubs})
 
-stubs.to = function (val) { return val }
-stubs.from = function (val) { return val }
+stubs.to = sinon.stub().returnsArg(0)
+stubs.from = sinon.stub().returnsArg(0)
 
 describe('The json attribute type', function () {
 
@@ -27,7 +27,7 @@ describe('The json attribute type', function () {
       sinon.assert.calledWithExactly(JSON.stringify, val)
     })
 
-    it('shour return the result of JSON.stringify', function () {
+    it('should return the result of JSON.stringify', function () {
       var expected = 'bar'
       JSON.stringify.returns(expected)
       json.to('foo').should.equal(expected)
@@ -43,7 +43,7 @@ describe('The json attribute type', function () {
       sinon.assert.calledWithExactly(JSON.parse, val)
     })
 
-    it('shour return the result of JSON.parse', function () {
+    it('should return the result of JSON.parse', function () {
       var expected = 'bar'
       JSON.parse.returns(expected)
       json.from('foo').should.equal(expected)

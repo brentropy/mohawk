@@ -4,8 +4,8 @@ var proxyquire = require('proxyquire').noPreserveCache()
 var stubs = {}
 var string = proxyquire('../../lib/types/string', {'./base': stubs})
 
-stubs.to = function (val) { return val }
-stubs.from = function (val) { return val }
+stubs.to = sinon.stub().returnsArg(0)
+stubs.from = sinon.stub().returnsArg(0)
 
 describe('The string attribute type', function () {
 
