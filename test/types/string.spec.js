@@ -1,6 +1,6 @@
 var should = require('should')
 var sinon = require('sinon')
-var proxyquire = require('proxyquire').noPreserveCache()
+var proxyquire = require('proxyquire')
 var stubs = {}
 var string = proxyquire('../../lib/types/string', {'./base': stubs})
 
@@ -25,7 +25,7 @@ describe('The string attribute type', function () {
 
   describe('`from()` method', function () {
     
-    it('should return val if it is not an object with S property', function () {
+    it('should return val if it is not an object with a S prop', function () {
       var expected = 'foo'
       string.from(expected).should.equal(expected)
     }),

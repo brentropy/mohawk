@@ -1,6 +1,6 @@
 var should = require('should')
 var sinon = require('sinon')
-var proxyquire = require('proxyquire').noPreserveCache()
+var proxyquire = require('proxyquire')
 var stubs = {}
 var number = proxyquire('../../lib/types/number', {'./base': stubs})
 
