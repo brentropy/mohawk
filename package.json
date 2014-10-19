@@ -1,7 +1,7 @@
 {
   "name": "mohawk",
   "version": "0.0.1",
-  "description": "High level DynamoDB library/ODM with mixins and custom types",
+  "description": "WIP: DynamoDB ODM with mixins and custom types",
   "main": "lib/mohawk.js",
   "scripts": {
     "test": "mocha -R spec \"test/**/*.spec.js\"",
