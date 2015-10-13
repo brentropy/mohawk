@@ -2,7 +2,7 @@
   "name": "mohawk",
   "version": "1.0.0",
   "description": "A bad-ass object document mapper for dynamodb.",
-  "main": "index.js",
+  "main": "lib/mohawk.js",
   "scripts": {
     "test": "npm run prepublish && tape lib/*.test.js | tap-dot",
     "spec": "npm run prepublish && tape src/*.test.js | tap-spec",
@@ -24,6 +24,7 @@
     "watch": "^0.16.0"
   },
   "babel": {
+    "stage": 1,
     "blacklist": [
       "es3.memberExpressionLiterals",
       "es3.propertyLiterals",

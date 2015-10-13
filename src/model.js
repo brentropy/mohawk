@@ -6,7 +6,7 @@ const savedDigest = new WeakMap()
 
 export default class BaseModel {
   static key (hash, range) {
-    let jsonKey = {[this.constructor.hashKey]: hash}
+    let jsonKey = {[this.hashKey]: hash}
     if (this.constructor.rangeKey) {
       jsonKey[this.constructor.rangeKey] = range
     }
@@ -22,6 +22,7 @@ export default class BaseModel {
     if (saved) {
       savedDigest.set(record, record.digest())
     }
+    return record
   }
 
   static serviceCall (method, params) {
@@ -41,7 +42,10 @@ export default class BaseModel {
       TableName: this.tableName(),
       Key: key
     })
-    return this.fromItem(data.Item || key, !!data.Item)
+    if (!data.Item) {
+      return null
+    }
+    return this.fromItem(data.Item)
   }
 
   constructor (initial) {
@@ -60,7 +64,6 @@ export default class BaseModel {
     }
     await this.constructor.serviceCall('putItem', {
       TableName: this.constructor.tableName(),
-      Key: this.key(),
       Item: jsonToItem(this)
     })
     savedDigest.set(this, digest)
