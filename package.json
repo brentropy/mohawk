@@ -1,0 +1,43 @@
+{
+  "name": "mohawk",
+  "version": "1.0.0",
+  "description": "A bad-ass object document mapper for dynamodb.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run prepublish && tape lib/*.test.js | tap-dot",
+    "spec": "npm run prepublish && tape src/*.test.js | tap-spec",
+    "test-watch": "watch \"npm test\" src",
+    "prepublish": "babel -d lib src"
+  },
+  "keywords": ["dynamo", "dynamodb", "orm", "odm", "aws"],
+  "author": "Brent Burgoyne",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "babel-eslint": "^4.1.3",
+    "eslint": "^1.6.0",
+    "eslint-config-standard": "^4.4.0",
+    "eslint-plugin-standard": "^1.3.1",
+    "tap-dot": "^1.0.0",
+    "tap-spec": "^4.1.0",
+    "tape": "^4.2.1",
+    "watch": "^0.16.0"
+  },
+  "babel": {
+    "blacklist": [
+      "es3.memberExpressionLiterals",
+      "es3.propertyLiterals",
+      "es5.properties.mutators",
+      "es6.blockScoping",
+      "es6.constants",
+      "es6.arrowFunctions",
+      "es6.spec.symbols",
+      "es6.templateLiterals",
+      "es6.literals",
+      "regenerator"
+    ],
+    "optional": [
+      "asyncToGenerator"
+    ]
+  }
+}
