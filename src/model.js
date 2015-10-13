@@ -70,6 +70,14 @@ export default class BaseModel {
     return true
   }
 
+  async destroy () {
+    await this.constructor.serviceCall('deleteItem', {
+      TableName: this.constructor.tableName(),
+      Key: this.key()
+    })
+    savedDigest.set(this, null)
+  }
+
   digest () {
     return createHash('sha1')
       .update(JSON.stringify(jsonToItem(this)))
