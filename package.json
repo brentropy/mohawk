@@ -1,6 +1,6 @@
 {
   "name": "mohawk",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A bad-ass object document mapper for dynamodb.",
   "main": "lib/mohawk.js",
   "scripts": {
