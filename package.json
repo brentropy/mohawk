@@ -1,6 +1,6 @@
 {
   "name": "mohawk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A bad-ass object document mapper for dynamodb.",
   "main": "lib/mohawk.js",
   "scripts": {
@@ -9,7 +9,13 @@
     "test-watch": "watch \"npm test\" src",
     "prepublish": "babel -d lib src"
   },
-  "keywords": ["dynamo", "dynamodb", "orm", "odm", "aws"],
+  "keywords": [
+    "dynamo",
+    "dynamodb",
+    "orm",
+    "odm",
+    "aws"
+  ],
   "author": "Brent Burgoyne",
   "license": "MIT",
   "devDependencies": {
