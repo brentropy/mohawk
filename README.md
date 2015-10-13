@@ -5,8 +5,8 @@ A bad-ass object document mapper for Amazon
 
 ## WIP Warning
 
-This is a work in progress. Currently dynamo only offers limited functionality
-(and test converage). There will be more to come soon. API changes will likely
+This is a work in progress. Currently mohawk only offers limited functionality
+(and test coverage). There will be more to come soon. API changes will likely
 happen.
 
 ## Install
