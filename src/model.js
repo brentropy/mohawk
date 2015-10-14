@@ -17,11 +17,10 @@ export default class BaseModel {
     return (this.prefix || '') + (this.table || this.name)
   }
 
-  static fromItem (item, saved = true) {
+  static fromItem (item) {
     let record = new this(itemToJson(item))
-    if (saved) {
-      savedDigest.set(record, record.digest())
-    }
+    record.freezeKey()
+    savedDigest.set(record, record.digest())
     return record
   }
 
@@ -57,6 +56,13 @@ export default class BaseModel {
     return this.constructor.key(this[hashKey], this[rangeKey])
   }
 
+  freezeKey () {
+    freezeProperty(this, this.constructor.hashKey)
+    if (this.constructor.rangeKey) {
+      freezeProperty(this, this.constructor.rangeKey)
+    }
+  }
+
   async save () {
     let digest = this.digest()
     if (digest === savedDigest.get(this)) {
@@ -66,6 +72,7 @@ export default class BaseModel {
       TableName: this.constructor.tableName(),
       Item: jsonToItem(this)
     })
+    this.freezeKey()
     savedDigest.set(this, digest)
     return true
   }
@@ -83,4 +90,13 @@ export default class BaseModel {
       .update(JSON.stringify(jsonToItem(this)))
       .digest('base64')
   }
+}
+
+function freezeProperty (obj, prop) {
+  Object.defineProperty(obj, prop, {
+    enumerable: true,
+    configurable: false,
+    writable: false,
+    value: obj[prop]
+  })
 }
